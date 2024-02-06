@@ -7,24 +7,34 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  username: string = "";
   @ViewChild('fom') signupForm!: NgForm;
   defaultQuestion = 'pet';
   answer = '';
   gender = ['male', 'female'];
-  user={
-    name:'',
-    email:'',
-    userName:'',
-    questionAnswer:'',
-    answer:'',
-    gender:''
+  user = {
+    name: '',
+    email: '',
+    userName: '',
+    questionAnswer: '',
+    answer: '',
+    gender: ''
   }
-  submitted=false
-  suggestUserName(name:string) {
-    const suggestUserName =name + Math.floor(Math.random()*10000 )
+  submitted = false;
+
+  suggestUserName(name: string) {
+    console.log(name);
+    
+    if (name) {
+      this.username = name + Math.floor(Math.random() * 10000)
+    }
+    else {
+      this.username = "abc"
+
+    }
     // this.signupForm.setValue({
     //   userData:{
-    //     username:suggestUserName,
+    //     username:this.suggestUserName,
     //     email:''
     //   },
     // select:'pet',
@@ -33,8 +43,8 @@ export class AppComponent {
     // })
 
     this.signupForm.form.patchValue({
-      userData:{
-        username:suggestUserName
+      userData: {
+        username: this.username
       }
     });
   }
@@ -46,16 +56,19 @@ export class AppComponent {
 
   onSubmit() {
     console.log(this.signupForm);
-    
-    this.submitted=true
-    this.user.userName=this.signupForm.value.userData.username;
-    this.user.name=this.signupForm.value.userData.name;
-    this.user.email=this.signupForm.value.userData.email;
-    this.user.questionAnswer=this.signupForm.value.select;
-    this.user.gender=this.signupForm.value.gender;
-    this.user.answer=this.signupForm.value.questionAnswer;
+
+    this.submitted = true
+    this.user.userName = this.signupForm.value.userData.username;
+    this.user.name = this.signupForm.value.userData.name;
+    this.user.email = this.signupForm.value.userData.email;
+    this.user.questionAnswer = this.signupForm.value.select;
+    this.user.gender = this.signupForm.value.gender;
+    this.user.answer = this.signupForm.value.questionAnswer;
 
 
-    this.signupForm.reset();
+    // this.signupForm.reset();
   }
+
+
+
 }
