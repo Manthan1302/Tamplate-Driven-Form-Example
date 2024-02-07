@@ -14,7 +14,7 @@
           </div>
 
           <br>
-          <button class="btn btn-secondary" type="button" (click)="suggestUserName(name.value)">Suggest a Username</button>
+          <button class="btn btn-secondary" type="button" (click)="suggestUserName(name.value)" [disabled]="!name.value">Suggest a Username</button>
           <br>
           <br>
 

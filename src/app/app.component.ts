@@ -4,10 +4,11 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  username: string = "";
+  username: string = '';
+  userNames: string[] = [];
   @ViewChild('fom') signupForm!: NgForm;
   defaultQuestion = 'pet';
   answer = '';
@@ -18,19 +19,19 @@ export class AppComponent {
     userName: '',
     questionAnswer: '',
     answer: '',
-    gender: ''
-  }
+    gender: '',
+  };
   submitted = false;
 
   suggestUserName(name: string) {
     console.log(name);
-    
-    if (name) {
-      this.username = name + Math.floor(Math.random() * 10000)
-    }
-    else {
-      this.username = "abc"
 
+    if (name) {
+      this.username = name + Math.floor(Math.random() * 10000);
+
+     
+    } else {
+      this.username = '';
     }
     // this.signupForm.setValue({
     //   userData:{
@@ -44,8 +45,8 @@ export class AppComponent {
 
     this.signupForm.form.patchValue({
       userData: {
-        username: this.username
-      }
+        username: this.username,
+      },
     });
   }
 
@@ -55,9 +56,16 @@ export class AppComponent {
   // }
 
   onSubmit() {
+    if (this.userNames.includes(this.username)) {
+      alert('userName Already Exits!!');
+      return
+    } else {
+      this.userNames.push(this.username);
+      console.log(this.userNames);
+    }
     console.log(this.signupForm);
 
-    this.submitted = true
+    this.submitted = true;
     this.user.userName = this.signupForm.value.userData.username;
     this.user.name = this.signupForm.value.userData.name;
     this.user.email = this.signupForm.value.userData.email;
@@ -65,10 +73,6 @@ export class AppComponent {
     this.user.gender = this.signupForm.value.gender;
     this.user.answer = this.signupForm.value.questionAnswer;
 
-
-    // this.signupForm.reset();
+    this.signupForm.reset();
   }
-
-
-
 }
